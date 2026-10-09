@@ -1,1 +1,51 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Learn Pakistan</title><link rel="stylesheet" href="/style.css"></head><body><header><div class="header"><a class="brand" href="/"><span class="mark">☾★</span><span>Learn <b>Pakistan</b><small>News | Knowledge | Progress</small></span></a><a class="admin" href="/">Home</a></div></header><main class="wrap article-page" id="article"></main><script src="/article.js"></script></body></html>
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Learn Pakistan</title>
+  <link rel="stylesheet" href="/style.css">
+  <style>
+    .share-container { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #eee; }
+    .btn-share { background: #4F46E5; color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 4px; cursor: pointer; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.4rem; }
+    .btn-share:hover { background: #4338CA; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header">
+      <a class="brand" href="/"><span class="mark">☾★</span><span>Learn <b>Pakistan</b><small>News | Knowledge | Progress</small></span></a>
+      <a class="admin" href="/">Home</a>
+    </div>
+  </header>
+  
+  <main class="wrap article-page" id="article"></main>
+  
+  <div class="wrap" style="padding-bottom: 3rem;">
+    <div class="share-container">
+      <button class="btn-share" onclick="shareArticle()">
+        📋 Share This Article
+      </button>
+    </div>
+  </div>
+
+  <script>
+    function shareArticle() {
+      const articleUrl = window.location.href;
+      const articleTitle = document.title || "Learn Pakistan Article";
+
+      if (navigator.share) {
+        navigator.share({
+          title: articleTitle,
+          url: articleUrl,
+        }).catch((err) => console.log("Sharing error:", err));
+      } else {
+        navigator.clipboard.writeText(articleUrl).then(() => {
+          alert("Article link copied to clipboard!");
+        });
+      }
+    }
+  </script>
+  <script src="/article.js"></script>
+</body>
+</html>
