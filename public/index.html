@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learn Pakistan</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header>
+    <div class="top">
+      Learn Today &nbsp; | &nbsp; Build a Better Tomorrow 
+      <button id="lang">اردو</button>
+    </div>
+    <div class="header">
+      <a class="brand" href="/">
+        <span class="mark">☪★</span>
+        <span>Learn <b>Pakistan</b><small>News | Knowledge | Progress</small></span>
+      </a>
+      <div class="search">
+        <input id="q" placeholder="Search articles, topics, or keywords">
+        <button onclick="load()">Search</button>
+      </div>
+    </div>
+    <nav id="nav"></nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero" id="hero"></section>
+    <div class="layout">
+      <section>
+        <h2>Latest Articles</h2>
+        <div class="grid" id="articles"></div>
+      </section>
+      <aside>
+        <div class="panel">
+          <h3>Categories</h3>
+          <div id="cats"></div>
+        </div>
+        <div class="panel">
+          <h3>Trending</h3>
+          <div id="trend"></div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 Learn Pakistan · News · Knowledge · Progress
+  </footer>
+
+  <script src="/site.js"></script>
+</body>
+</html>

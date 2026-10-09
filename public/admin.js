@@ -1,0 +1,13 @@
+async function api(url,opt={}){const r=await fetch(url,opt);let d={};try{d=await r.json()}catch{}if(!r.ok)throw new Error(d.error||"Request failed");return d}
+async function check(){try{await api("/api/me");login.style.display="none";dashboard.hidden=false;loadArticles()}catch{login.style.display="block";dashboard.hidden=true}}
+async function login(){try{await api("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:username.value,password:password.value})});check()}catch(e){alert(e.message)}}
+logout.onclick=async()=>{await api("/api/logout",{method:"POST"});location.reload()};
+async function loadArticles(){const data=await api("/api/articles?status=");list.innerHTML=data.map(a=>`<div class="item"><div><b>${a.title_en}</b><br><small>${a.category} · ${a.status}${a.featured?" · Featured":""}</small></div><div><button onclick='edit(${JSON.stringify(a)})'>Edit</button><button onclick='del(${a.id})'>Delete</button></div></div>`).join("")}
+function newArticle(){editor.hidden=false;formTitle.textContent="New Article";document.querySelectorAll("#editor input,#editor textarea").forEach(x=>{if(x.type!=="checkbox"&&x.type!=="file")x.value=""});status.value="draft";category.value="Pakistan";featured.checked=false}
+function closeEditor(){editor.hidden=true}
+function edit(a){editor.hidden=false;formTitle.textContent="Edit Article";id.value=a.id;title_en.value=a.title_en;title_ur.value=a.title_ur||"";category.value=a.category;excerpt_en.value=a.excerpt_en||"";excerpt_ur.value=a.excerpt_ur||"";content_en.value=a.content_en;content_ur.value=a.content_ur||"";image_url.value=a.image_url||"";status.value=a.status;featured.checked=!!a.featured}
+async function save(){let image=image_url.value;const f=document.getElementById("image").files[0];if(f){const fd=new FormData();fd.append("image",f);const up=await api("/api/upload",{method:"POST",body:fd});image=up.url}
+const body={title_en:title_en.value,title_ur:title_ur.value,category:category.value,excerpt_en:excerpt_en.value,excerpt_ur:excerpt_ur.value,content_en:content_en.value,content_ur:content_ur.value,image_url:image,status:status.value,featured:featured.checked};
+try{if(id.value)await api("/api/articles/"+id.value,{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});else await api("/api/articles",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});closeEditor();loadArticles()}catch(e){alert(e.message)}}
+async function del(x){if(!confirm("Delete this article?"))return;await api("/api/articles/"+x,{method:"DELETE"});loadArticles()}
+check();
